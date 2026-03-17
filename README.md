@@ -1,314 +1,172 @@
-[index (1).html](https://github.com/user-attachments/files/26071412/index.1.html)
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flow Prompt Panel — Chrome Extension cho AI Video Creator</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#080808;--bg2:#0f0f0f;--bg3:#161616;--b:#222;--b2:#2a2a2a;--txt:#f0f0f0;--txt2:#888;--txt3:#444;--acc:#e05a1e;--green:#22c55e;--blue:#3b9eff}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(8,8,8,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--b);z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-diamond{width:26px;height:26px;background:var(--acc);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
-.nav-text{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--acc)}
-.nav-links{display:flex;align-items:center;gap:24px}
-.nav-links a{color:var(--txt2);text-decoration:none;font-size:13px;transition:color .2s}
-.nav-links a:hover{color:var(--txt)}
-.nav-cta{padding:8px 20px;background:var(--acc);border:none;border-radius:6px;color:white;font-size:11px;font-weight:700;font-family:'Space Mono',monospace;letter-spacing:.08em;cursor:pointer;text-decoration:none}
-.nav-cta:hover{opacity:.85}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 40px 80px;text-align:center;position:relative;overflow:hidden}
-.hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(224,90,30,.11) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--bg3);border:1px solid var(--b2);border-radius:20px;font-family:'Space Mono',monospace;font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:26px;animation:up .6s ease both}
-.badge::before{content:'';width:6px;height:6px;background:var(--acc);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(58px,9vw,116px);line-height:.92;letter-spacing:.02em;margin-bottom:22px;animation:up .6s ease .1s both}
-h1 span{color:var(--acc)}
-.sub{font-size:18px;color:var(--txt2);max-width:540px;line-height:1.6;margin-bottom:38px;animation:up .6s ease .2s both}
-.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:up .6s ease .3s both}
-.btn-a{padding:13px 30px;background:var(--acc);border:none;border-radius:8px;color:white;font-size:12px;font-weight:700;font-family:'Space Mono',monospace;letter-spacing:.08em;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
-.btn-a:hover{opacity:.85;transform:translateY(-2px)}
-.btn-b{padding:13px 30px;background:transparent;border:1px solid var(--b2);border-radius:8px;color:var(--txt2);font-size:12px;font-family:'Space Mono',monospace;letter-spacing:.06em;cursor:pointer;text-decoration:none;transition:all .2s}
-.btn-b:hover{border-color:var(--acc);color:var(--acc)}
-.mockup{margin-top:58px;width:100%;max-width:840px;background:var(--bg2);border:1px solid var(--b2);border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.6);animation:up .8s ease .4s both}
-.mbar{display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--b)}
-.mdots{display:flex;gap:5px}
-.mdots span{width:9px;height:9px;border-radius:50%}
-.mdots span:nth-child(1){background:#ff5f57}
-.mdots span:nth-child(2){background:#febc2e}
-.mdots span:nth-child(3){background:#28c840}
-.murl{flex:1;text-align:center;font-family:'Space Mono',monospace;font-size:9px;color:var(--txt3)}
-.mbody{display:grid;grid-template-columns:165px 1fr;height:390px}
-.msidebar{background:var(--bg2);border-right:1px solid var(--b);padding:8px;overflow:hidden}
-.mlogo{font-family:'Space Mono',monospace;font-size:7px;color:var(--acc);font-weight:700;letter-spacing:.18em;padding:6px 6px 8px;border-bottom:1px solid var(--b);margin-bottom:7px}
-.arow{padding:4px 8px;border-radius:4px;font-size:8px;font-family:'Space Mono',monospace;color:var(--txt3);display:flex;justify-content:space-between;margin-bottom:2px}
-.arow.on{background:#1a0d07;color:var(--acc);border-left:2px solid var(--acc)}
-.srow{padding:3px 13px;font-size:7px;font-family:'Space Mono',monospace;color:var(--txt3);margin-bottom:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.srow.on{color:var(--txt);border-left:2px solid var(--acc);background:#1a0d07}
-.mmain{padding:12px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
-.mtag{display:inline-block;padding:2px 7px;background:#1a0d07;border:1px solid #3a2010;border-radius:3px;font-family:'Space Mono',monospace;font-size:7px;color:var(--acc);letter-spacing:.1em}
-.mtitle{font-size:14px;font-weight:700;line-height:1.2;margin-top:3px}
-.mtiming{font-size:8px;color:var(--txt3);font-family:'Space Mono',monospace;margin-top:2px}
-.mrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mblock{background:var(--bg3);border:1px solid var(--b);border-radius:7px;overflow:hidden}
-.mhead{display:flex;justify-content:space-between;align-items:center;padding:5px 9px;border-bottom:1px solid var(--b)}
-.mlabel{font-family:'Space Mono',monospace;font-size:7px;font-weight:700;letter-spacing:.1em}
-.ls{color:var(--blue)}.le{color:var(--green)}.lv{color:var(--acc)}
-.mcopy{padding:2px 7px;border-radius:3px;font-family:'Space Mono',monospace;font-size:7px;font-weight:700;border:1px solid}
-.cs{background:#0d1a2e;border-color:#1e3a6e;color:var(--blue)}
-.ce{background:#0d1f14;border-color:#1a4a2a;color:var(--green)}
-.cv{background:#1a0d07;border-color:#3a2010;color:var(--acc)}
-.mbody2{padding:7px 9px;font-family:'Space Mono',monospace;font-size:7px;color:var(--txt2);line-height:1.5}
-.mbody2 b{color:var(--txt)}
-.wrap{padding:88px 40px;max-width:1080px;margin:0 auto}
-.slabel{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin-bottom:12px}
-.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,62px);line-height:1;margin-bottom:12px}
-.ssub{font-size:16px;color:var(--txt2);max-width:480px;line-height:1.6}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:44px}
-.step{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:24px 20px;transition:border-color .2s}
-.step:hover{border-color:var(--acc)}
-.snum{font-family:'Bebas Neue',sans-serif;font-size:50px;color:var(--b2);line-height:1;margin-bottom:10px}
-.step h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.step p{font-size:13px;color:var(--txt2);line-height:1.6}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:13px;margin-top:44px}
-.feat{background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:20px;transition:all .2s}
-.feat:hover{border-color:var(--b2);transform:translateY(-2px)}
-.ficon{width:36px;height:36px;background:var(--bg3);border:1px solid var(--b2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:11px}
-.feat h3{font-size:14px;font-weight:700;margin-bottom:5px}
-.feat p{font-size:13px;color:var(--txt2);line-height:1.6}
-.ptags{display:flex;flex-wrap:wrap;gap:7px;margin-top:26px}
-.ptag{padding:5px 12px;background:var(--bg3);border:1px solid var(--b2);border-radius:20px;font-family:'Space Mono',monospace;font-size:10px;color:var(--txt2)}
-.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:44px}
-.pcard{background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:28px 24px;position:relative}
-.pcard.hot{border-color:var(--acc);background:linear-gradient(135deg,#1a0d07 0%,var(--bg2) 100%)}
-.pbadge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 12px;background:var(--acc);border-radius:20px;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;color:white;letter-spacing:.1em;white-space:nowrap}
-.pname{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;color:var(--txt2);margin-bottom:9px}
-.pprice{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:1;margin-bottom:3px}
-.pprice span{font-size:20px;vertical-align:top;margin-top:8px;display:inline-block}
-.pperiod{font-size:11px;color:var(--txt2);margin-bottom:20px}
-.plist{list-style:none;margin-bottom:24px}
-.plist li{font-size:13px;color:var(--txt2);padding:5px 0;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:7px}
-.plist li::before{content:'✓';color:var(--green);font-size:10px;flex-shrink:0}
-.plist li.no{color:var(--txt3)}
-.plist li.no::before{content:'—';color:var(--txt3)}
-.pbtn{width:100%;padding:10px;border-radius:7px;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.07em;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:all .2s}
-.pbtn.solid{background:var(--acc);border:none;color:white}
-.pbtn.solid:hover{opacity:.85}
-.pbtn.outline{background:transparent;border:1px solid var(--b2);color:var(--txt2)}
-.pbtn.outline:hover{border-color:var(--acc);color:var(--acc)}
-.cta{text-align:center;padding:88px 40px;position:relative;overflow:hidden}
-.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(224,90,30,.07) 0%,transparent 70%);pointer-events:none}
-.cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,82px);margin-bottom:13px}
-.cta p{font-size:16px;color:var(--txt2);margin-bottom:32px}
-footer{border-top:1px solid var(--b);padding:26px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--txt3);font-family:'Space Mono',monospace}
-footer a{color:var(--txt3);text-decoration:none}
-footer a:hover{color:var(--acc)}
-@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.reveal{opacity:0;transform:translateY(26px);transition:all .6s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-@media(max-width:600px){nav{padding:12px 20px}.nav-links{display:none}.wrap{padding:56px 20px}.msidebar{display:none}.mbody{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
+# 🎬 Scene Prompt — AI Video Prompt Manager
 
-<nav>
-  <div class="nav-logo">
-    <div class="nav-diamond"></div>
-    <span class="nav-text">Flow Prompt Panel</span>
-  </div>
-  <div class="nav-links">
-    <a href="#how">Cách dùng</a>
-    <a href="#features">Tính năng</a>
-    <a href="#pricing">Giá</a>
-  </div>
-  <a href="https://khoivibes87.gumroad.com/l/scene-prompt" class="nav-cta" target="_blank">Tải về →</a>
-</nav>
+A Chrome extension for AI video creators. Manage all your act/scene prompts in one clean side panel — works alongside Google Flow, Kling, Runway, Midjourney, and more.
 
-<div class="hero">
-  <div class="hero-glow"></div>
-  <div class="badge">Chrome Extension · Miễn phí</div>
-  <h1>PROMPT<br><span>PANEL</span><br>CHO AI VIDEO</h1>
-  <p class="sub">Quản lý hàng trăm prompt theo từng scene — copy 1 click, dùng ngay trên Google Flow, Kling, Runway và mọi nền tảng AI.</p>
-  <div class="btns">
-    <a href="https://khoivibes87.gumroad.com/l/scene-prompt" class="btn-a" target="_blank">⬇ Tải miễn phí</a>
-    <a href="#how" class="btn-b">Xem demo →</a>
-  </div>
-  <div class="mockup">
-    <div class="mbar">
-      <div class="mdots"><span></span><span></span><span></span></div>
-      <div class="murl">labs.google/fx/vi/tools/flow &nbsp;·&nbsp; Flow Prompt Panel</div>
-    </div>
-    <div class="mbody">
-      <div class="msidebar">
-        <div class="mlogo">▶ FLOW PROMPT PANEL</div>
-        <div class="arow">ACT17 <span>6sc</span></div>
-        <div class="arow">ACT18 <span>6sc</span></div>
-        <div class="arow on">ACT19 <span>6sc ▼</span></div>
-        <div class="srow">01 SO THE SMARTER QUESTION...</div>
-        <div class="srow">02 HOW DO I EARN MORE</div>
-        <div class="srow on">● 03 IT IS THIS INSTEAD</div>
-        <div class="srow">04 HOW DO I BUILD BETTER...</div>
-        <div class="srow">05 THAT CHANGES THE WHOLE...</div>
-        <div class="srow">06 FROM CHASING MONEY TO...</div>
-        <div class="arow">ACT20 <span>6sc</span></div>
-        <div class="arow">ACT21 <span>6sc</span></div>
-        <div class="arow">ACT22 <span>6sc</span></div>
-      </div>
-      <div class="mmain">
-        <div>
-          <div class="mtag">ACT19 · SCENE 03</div>
-          <div class="mtitle">IT IS THIS INSTEAD</div>
-          <div class="mtiming">14s–21s &nbsp;·&nbsp; 15 / 84</div>
-        </div>
-        <div class="mrow">
-          <div class="mblock">
-            <div class="mhead">
-              <span class="mlabel ls">IMAGE START FRAME</span>
-              <button class="mcopy cs">COPY</button>
-            </div>
-            <div class="mbody2">bright clean studio, host centered, one simple question card beside the host, modern finance explainer style, minimal readable composition...</div>
-          </div>
-          <div class="mblock">
-            <div class="mhead">
-              <span class="mlabel le">IMAGE END FRAME</span>
-              <button class="mcopy ce">COPY</button>
-            </div>
-            <div class="mbody2">host centered with the question card clearly visible, a subtle answer glow forming, balanced bright composition, stable landed frame...</div>
-          </div>
-        </div>
-        <div class="mblock">
-          <div class="mhead">
-            <span class="mlabel lv">VIDEO PROMPT</span>
-            <button class="mcopy cv">COPY VIDEO PROMPT</button>
-          </div>
-          <div class="mbody2"><b>Video start:</b> host centered on bright background, question card visible... <b>Motion development:</b> card sharpens as the reframe lands, slight push-in on host... <b>Video end:</b> question card stable, short landing hold.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+---
 
-<div class="wrap" id="how">
-  <div class="reveal">
-    <div class="slabel">Cách sử dụng</div>
-    <div class="stitle">3 BƯỚC LÀ XONG</div>
-    <p class="ssub">Không cần cài đặt phức tạp. Mở extension, paste dữ liệu, bắt đầu làm việc ngay.</p>
-  </div>
-  <div class="steps">
-    <div class="step reveal">
-      <div class="snum">01</div>
-      <h3>Paste dữ liệu</h3>
-      <p>Mở file .txt script, Ctrl+A → Ctrl+C → paste vào panel. Extension tự nhận dạng Markdown hoặc plain text.</p>
-    </div>
-    <div class="step reveal">
-      <div class="snum">02</div>
-      <h3>Chọn scene</h3>
-      <p>Duyệt qua danh sách Acts và Scenes ở sidebar. Tìm kiếm nhanh. Điều hướng bằng phím mũi tên ← →.</p>
-    </div>
-    <div class="step reveal">
-      <div class="snum">03</div>
-      <h3>Copy & dùng</h3>
-      <p>Nhấn COPY trên từng prompt — START FRAME, END FRAME, VIDEO PROMPT. Paste vào bất kỳ AI nào.</p>
-    </div>
-  </div>
-</div>
+## 📥 Installation
 
-<div class="wrap" id="features" style="padding-top:0">
-  <div class="reveal">
-    <div class="slabel">Tính năng</div>
-    <div class="stitle">MỌI THỨ BẠN CẦN</div>
-  </div>
-  <div class="features">
-    <div class="feat reveal"><div class="ficon">📂</div><h3>Auto-detect format</h3><p>Tự động nhận cả 2 format: Markdown (#, ##, ###) và plain text. Không cần cấu hình gì.</p></div>
-    <div class="feat reveal"><div class="ficon">⚡</div><h3>Copy 1 click</h3><p>START FRAME, END FRAME, VIDEO PROMPT — mỗi section có nút COPY riêng. Không cần select text.</p></div>
-    <div class="feat reveal"><div class="ficon">🔍</div><h3>Tìm kiếm nhanh</h3><p>Search scene theo tên. Điều hướng bằng phím mũi tên. Không bao giờ mất vị trí đang làm việc.</p></div>
-    <div class="feat reveal"><div class="ficon">🎨</div><h3>Tùy biến tự do</h3><p>Đặt tên section thoải mái — IMAGE START, KHUNG ĐẦU, OPENING SHOT... Extension đọc được hết.</p></div>
-    <div class="feat reveal"><div class="ficon">🔒</div><h3>An toàn 100%</h3><p>Không can thiệp vào Flow hay bất kỳ website nào. Chỉ dùng clipboard. Không thu thập dữ liệu.</p></div>
-    <div class="feat reveal"><div class="ficon">📐</div><h3>Side Panel</h3><p>Góc làm việc cố định bên phải trình duyệt — luôn hiển thị, không che nội dung đang làm.</p></div>
-  </div>
-  <div style="margin-top:44px" class="reveal">
-    <div class="slabel">Hoạt động với</div>
-    <div class="ptags">
-      <span class="ptag">Google Flow</span>
-      <span class="ptag">Whisk</span>
-      <span class="ptag">Kling AI</span>
-      <span class="ptag">Runway</span>
-      <span class="ptag">Pika</span>
-      <span class="ptag">Midjourney</span>
-      <span class="ptag">Stable Diffusion</span>
-      <span class="ptag">ComfyUI</span>
-      <span class="ptag">Hailuo</span>
-      <span class="ptag">+ Mọi nền tảng AI</span>
-    </div>
-  </div>
-</div>
+1. Download `scene-prompt.zip` from the link above
+2. Unzip the file
+3. Open Chrome → go to `chrome://extensions`
+4. Enable **Developer mode** (top right toggle)
+5. Click **"Load unpacked"**
+6. Select the unzipped `scene-prompt` folder
+7. Click the extension icon in Chrome toolbar → **Scene Prompt** appears as a side panel
 
-<div class="wrap" id="pricing">
-  <div class="reveal" style="text-align:center;max-width:100%">
-    <div class="slabel">Giá</div>
-    <div class="stitle">ĐƠN GIẢN & MINH BẠCH</div>
-  </div>
-  <div class="pcards">
-    <div class="pcard reveal">
-      <div class="pname">FREE</div>
-      <div class="pprice"><span>$</span>0</div>
-      <div class="pperiod">Mãi mãi miễn phí</div>
-      <ul class="plist">
-        <li>Đọc file .txt không giới hạn</li>
-        <li>Copy START / END / VIDEO prompt</li>
-        <li>Tìm kiếm scene</li>
-        <li>Auto-detect format</li>
-        <li class="no">Cập nhật tính năng mới</li>
-        <li class="no">Hỗ trợ ưu tiên</li>
-      </ul>
-      <a href="https://khoivibes87.gumroad.com/l/scene-prompt" class="pbtn outline" target="_blank">Tải miễn phí</a>
-    </div>
-    <div class="pcard hot reveal">
-      <div class="pbadge">PHỔ BIẾN NHẤT</div>
-      <div class="pname">PRO</div>
-      <div class="pprice"><span>$</span>9</div>
-      <div class="pperiod">Một lần — dùng mãi mãi</div>
-      <ul class="plist">
-        <li>Tất cả tính năng Free</li>
-        <li>Cập nhật tính năng vĩnh viễn</li>
-        <li>Hỗ trợ ưu tiên qua email</li>
-        <li>Prompt templates có sẵn</li>
-        <li>Early access tính năng mới</li>
-        <li>Hỗ trợ thêm nền tảng mới</li>
-      </ul>
-      <a href="https://khoivibes87.gumroad.com/l/scene-prompt" class="pbtn solid" target="_blank">Mua ngay — $9</a>
-    </div>
-  </div>
-</div>
+---
 
-<div class="cta reveal">
-  <h2>SẴN SÀNG<br>TĂNG TỐC?</h2>
-  <p>Tải về miễn phí — cài đặt trong 2 phút</p>
-  <div class="btns">
-    <a href="https://khoivibes87.gumroad.com/l/scene-prompt" class="btn-a" target="_blank">⬇ Tải Extension ngay</a>
-    <a href="https://khoivibes87.gumroad.com/l/scene-prompt" class="btn-b" target="_blank">Chrome Web Store</a>
-  </div>
-</div>
+## 📄 Tab 1: Scenes
 
-<footer>
-  <div style="display:flex;align-items:center;gap:8px">
-    <div class="nav-diamond" style="width:16px;height:16px"></div>
-    <span>Flow Prompt Panel © 2025</span>
-  </div>
-  <div style="display:flex;gap:16px">
-    <a href="#">Hướng dẫn</a>
-    <a href="#">Liên hệ</a>
-    <a href="https://khoivibes87.gumroad.com/l/scene-prompt" target="_blank">Gumroad</a>
-  </div>
-</footer>
+### Supported File Formats
 
-<script>
-const obs = new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-</script>
-</body>
-</html>
+**Format 1 — Markdown (recommended):**
+```
+# ACT 17
+
+## SCENE 1 — TITLE | 0s-7s
+
+### IMAGE START FRAME
+your prompt here...
+
+### IMAGE END FRAME
+your prompt here...
+
+### VIDEO PROMPT
+Video start: ...
+Motion development: ...
+Video end: ...
+```
+
+**Format 2 — Plain text:**
+```
+PHAN A - TOPIC SNAPSHOT
+Topic: Do You Really Understand Income? — Act 17
+
+PHAN C - SCENE PACKAGES
+
+SCENE 1 - TITLE | 0s-7s
+
+IMAGE START FRAME
+your prompt here...
+
+VIDEO PROMPT
+your prompt here...
+```
+
+**Format 3 — Scenes only (no ACT header needed):**
+```
+## SCENE 1 — TITLE | 0s-7s
+
+### IMAGE START FRAME
+your prompt here...
+
+### VIDEO PROMPT
+your prompt here...
+```
+
+### How to Load Your File
+
+**Option A — Open File:**
+1. Click **"📂 Open File"** tab
+2. Click the file zone
+3. Select your `.txt` or `.md` file
+4. Extension loads automatically
+
+**Option B — Paste Text:**
+1. Click **"📋 Paste"** tab
+2. Paste your script content
+3. Click **"▶ Load Data"**
+
+### Using Scenes
+
+- **Sidebar** — click any act to expand, click any scene to view
+- **← →** buttons or arrow keys to navigate scenes
+- **▶ header** — click to expand/collapse each prompt section
+- **COPY** button — copies that section's prompt
+- **COPY ALL** — copies all sections at once
+- **⊞ Expand All** — expand or collapse all sections
+- **Edit** — click inside any prompt box to edit directly
+
+### 📁 Filename Helper
+
+After rendering images in Flow, use the filename bar to quickly name your files:
+
+1. Select the scene you just rendered
+2. Click **START**, **END**, **VIDEO**, or any section button
+3. Extension copies the filename: `ACT17-SC01-IMAGE-START-FRAME`
+4. Press **F2** on your downloaded file → **Ctrl+V** → **Enter**
+
+---
+
+## ✅ Tab 2: Tracker
+
+Track render progress across all your scenes.
+
+- **✓ (green)** — mark scene as done
+- **↺ (amber)** — mark scene as redo
+- Click again to reset to pending
+- Progress bar shows % complete
+- **Reset All** — clears all tracker data
+- Data is saved automatically — stays after closing Chrome
+
+---
+
+## 📚 Tab 3: Library
+
+Save and reuse your best prompts.
+
+1. Enter a **name/tag** for the prompt
+2. Paste the **prompt content**
+3. Click **"💾 Save to Library"**
+4. Use **Search** to find saved prompts
+5. Click **COPY** to copy any saved prompt
+6. Click **✕** to delete
+
+Library data is saved automatically in Chrome storage.
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `← →` or `↑ ↓` | Navigate between scenes |
+| `A` | Copy all prompts |
+
+---
+
+## 🎯 Supported Platforms
+
+Works with any AI video/image platform:
+
+- Google Flow
+- Kling AI
+- Runway
+- Midjourney
+- Stable Diffusion
+- ComfyUI
+- Pika
+- Hailuo
+
+---
+
+## ❓ FAQ
+
+**Q: My file doesn't load — what's wrong?**
+A: Make sure your file uses one of the supported formats above. The key requirements are `## SCENE` for scene headers and `###` for section headers (or ALL CAPS for plain text format).
+
+**Q: Will my tracker/library data be lost if I update the extension?**
+A: No — data is stored in Chrome's local storage and persists across updates.
+
+**Q: Can I edit prompts directly in the panel?**
+A: Yes! Click inside any prompt box and edit freely. Changes are temporary (not saved back to your file).
+
+**Q: The timing `| 0s-7s` — is it required?**
+A: No, timing is optional. `## SCENE 1 — TITLE` works fine without timing.
+
+---
+
+## 📬 Support
+
+Have questions or suggestions? Reach out via Gumroad.
